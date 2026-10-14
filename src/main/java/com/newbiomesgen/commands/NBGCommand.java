@@ -70,6 +70,26 @@ public class NBGCommand implements CommandExecutor {
                 }
                 break;
 
+            case "setbiome":
+                if (args.length > 1) {
+                    String biomeName = args[1].toLowerCase();
+                    
+                    // הסרת תגיות ביומים קודמות
+                    player.getScoreboardTags().removeIf(tag -> tag.startsWith("biome_"));
+                    
+                    if (biomeName.equalsIgnoreCase("clear")) {
+                        player.sendMessage(ChatColor.YELLOW + "✔ הסרת את הביום המותאם אישית!");
+                        return true;
+                    }
+
+                    // הוספת הביום החדש
+                    player.addScoreboardTag("biome_" + biomeName);
+                    player.sendMessage(ChatColor.GREEN + "✔ עברת לביום: " + ChatColor.AQUA + biomeName);
+                } else {
+                    player.sendMessage(ChatColor.RED + "שימוש: /nbg setbiome <biome_name|clear>");
+                }
+                break;
+
             default:
                 sendHelpMenu(player);
                 break;
@@ -82,11 +102,11 @@ public class NBGCommand implements CommandExecutor {
         player.sendMessage(ChatColor.DARK_GRAY + "---------------------------------------------");
         player.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "   🔮 NewBiomesGen - עזר למנהלים 🔮");
         player.sendMessage(ChatColor.DARK_GRAY + "---------------------------------------------");
-        player.sendMessage(ChatColor.GOLD + "/nbg help " + ChatColor.WHITE + "- הופעת תפריט העזרה הזה");
-        player.sendMessage(ChatColor.GOLD + "/nbg spawn boss " + ChatColor.WHITE + "- זימון הבוס Void Sentinel במיקום שלך");
-        player.sendMessage(ChatColor.GOLD + "/nbg give sword " + ChatColor.WHITE + "- קבלת חרב ה-Void הקסומה");
-        player.sendMessage(ChatColor.GOLD + "/nbg give wand " + ChatColor.WHITE + "- קבלת מטה ה-Void");
-        player.sendMessage(ChatColor.GOLD + "/nbg structure build " + ChatColor.WHITE + "- בניית מזבח קריסטלים במיקום הנוכחי");
+        player.sendMessage(ChatColor.GOLD + "/nbg help " + ChatColor.WHITE + "- הצגת תפריט העזרה");
+        player.sendMessage(ChatColor.GOLD + "/nbg spawn boss " + ChatColor.WHITE + "- זימון הבוס Void Sentinel");
+        player.sendMessage(ChatColor.GOLD + "/nbg give <sword|wand> " + ChatColor.WHITE + "- קבלת נשקי הקריסטל");
+        player.sendMessage(ChatColor.GOLD + "/nbg structure build " + ChatColor.WHITE + "- בניית מזבח ה-Void");
+        player.sendMessage(ChatColor.GOLD + "/nbg setbiome <name|clear> " + ChatColor.WHITE + "- מעבר בין 20 הביומים");
         player.sendMessage(ChatColor.DARK_GRAY + "---------------------------------------------");
     }
 }
