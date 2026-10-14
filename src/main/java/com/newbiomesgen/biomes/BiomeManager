@@ -17,17 +17,14 @@ public class BiomeManager {
     private void startBiomeTask() {
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                // בדיקה איזה ביום מופעל על השחקן כרגע
                 CustomBiomeType currentBiome = getPlayerBiome(player);
                 if (currentBiome != null) {
-                    // יצירת החלקיקים המיוחדים של הביום
                     player.getWorld().spawnParticle(
                             currentBiome.getParticle(),
                             player.getLocation().add(0, 1, 0),
                             10, 0.5, 0.5, 0.5, 0.02
                     );
 
-                    // הפעלת אפקט המעמד
                     if (currentBiome.getEffect() != null) {
                         player.addPotionEffect(new PotionEffect(currentBiome.getEffect(), 40, 0, false, false, true));
                     }
@@ -37,7 +34,6 @@ public class BiomeManager {
     }
 
     private CustomBiomeType getPlayerBiome(Player player) {
-        // כאן נוכל לחבר פקודה / תגיות / Chunk Generator
         for (CustomBiomeType biome : CustomBiomeType.values()) {
             if (player.getScoreboardTags().contains("biome_" + biome.name().toLowerCase())) {
                 return biome;
