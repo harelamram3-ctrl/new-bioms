@@ -2,7 +2,10 @@ package com.newbiomesgen;
 
 import com.newbiomesgen.biomes.VoidCrystalBiome;
 import com.newbiomesgen.bosses.VoidSentinelBoss;
+import com.newbiomesgen.commands.NBGCommand;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 public final class NewBiomesGen extends JavaPlugin {
 
@@ -18,6 +21,9 @@ public final class NewBiomesGen extends JavaPlugin {
         // הפעלת הבוס והרשמת האיוונטים
         this.bossManager = new VoidSentinelBoss(this);
         getServer().getPluginManager().registerEvents(bossManager, this);
+
+        // רישום הפקודה הראשית
+        Objects.requireNonNull(getCommand("nbg")).setExecutor(new NBGCommand(bossManager));
 
         getLogger().info("NewBiomesGen successfully loaded!");
     }
