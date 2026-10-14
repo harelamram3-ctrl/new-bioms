@@ -1,5 +1,6 @@
 package com.newbiomesgen;
 
+import com.newbiomesgen.biomes.BiomeManager;
 import com.newbiomesgen.biomes.VoidCrystalBiome;
 import com.newbiomesgen.bosses.VoidSentinelBoss;
 import com.newbiomesgen.commands.NBGCommand;
@@ -11,25 +12,29 @@ import java.util.Objects;
 public final class NewBiomesGen extends JavaPlugin {
 
     private VoidSentinelBoss bossManager;
+    private BiomeManager biomeManager;
 
     @Override
     public void onEnable() {
         getLogger().info("NewBiomesGen starting up!");
 
-        // הפעלת לוגיקת הביום
+        // 1. הפעלת מנהל 20 הביומים החדשים
+        this.biomeManager = new BiomeManager(this);
+
+        // 2. הפעלת לוגיקת ביום ה-Void הבסיסי
         new VoidCrystalBiome(this);
 
-        // הפעלת הבוס והרשמת האיוונטים
+        // 3. הפעלת הבוס והרשמת האיוונטים
         this.bossManager = new VoidSentinelBoss(this);
         getServer().getPluginManager().registerEvents(bossManager, this);
 
-        // הרשמת ה-Listeners החדשים לחפצים
+        // 4. הרשמת מאזין האירועים לחפצים המיוחדים
         getServer().getPluginManager().registerEvents(new ItemListener(), this);
 
-        // רישום הפקודה הראשית
+        // 5. רישום הפקודה הראשית (עם תמיכה בביומים)
         Objects.requireNonNull(getCommand("nbg")).setExecutor(new NBGCommand(bossManager));
 
-        getLogger().info("NewBiomesGen successfully loaded!");
+        getLogger().info("NewBiomesGen successfully loaded with 20 custom biomes!");
     }
 
     @Override
