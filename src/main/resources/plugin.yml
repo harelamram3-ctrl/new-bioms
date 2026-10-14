@@ -4,3 +4,8 @@ main: com.newbiomesgen.NewBiomesGen
 api-version: '1.20'
 author: badpanda
 description: A powerful plugin generating custom biomes, epic structures, and custom bosses.
+commands:
+  nbg:
+    description: Main command for NewBiomesGen plugin
+    permission: newbiomesgen.admin
+    usage: /nbg [spawn boss]
